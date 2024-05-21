@@ -1,39 +1,22 @@
 from flask import Flask, make_response, jsonify, request
-from bd import carros
 import os
 import pandas as pd
+from utils import create_upload_folder, save_csv, delete_csv
+from model import predictions
 
-#instanciar flask
+# Instanciar flask
 app = Flask('__name__')
-app.json.sort_keys = False
 
-
-#UTILS Functions
-def create_upload_folder(folder_name):
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)
-
-def save_csv(data, path):
-    # Deletar arquivo existente se existir
-    delete_csv(path)
-
-    # Criar um novo arquivo CSV com os dados fornecidos
-    df = pd.DataFrame(data)
-    df.to_csv(path, index=False)
-
-def delete_csv(path):
-    # Deletar o arquivo CSV se existir
-    if os.path.exists(path):
-        os.remove(path)
-
-
-#MAIN  functions
-folder_name = 'uploads'
-create_upload_folder(folder_name)
-
-
+# Receber respostas
 @app.route('/respostas', methods=['POST'])
 def upload_data():
+
+    # Cria pasta uploads se nao existir
+    folder_name = 'uploads'
+    create_upload_folder(folder_name)
+
+    # Request do json, guarda no array
+    # Se tiver vazio ou com outro nome que não 'responses' dá erro
     data = request.get_json()
     if not data or 'responses' not in data:
         return jsonify({'error': 'Invalid data'}), 400
@@ -41,14 +24,21 @@ def upload_data():
     responses = data['responses']
     csv_path = os.path.join(folder_name, 'teste.csv')
 
-    # Salvar o array de respostas em um arquivo CSV
     save_csv(responses, csv_path)
     return responses
 
+#add codigo rede neural
+#pegar o valor da probabilidade
+#devolver para kotlin no metodo GET
+#apagar teste.csv (juntar a base original antes de apagar?)
+#gerar requirements.txt
 
-
-
-
-
+@app.route('/resultado', methods=['GET'])
+def send_result():
+    if not predictions or len(predictions) == 0:
+        return jsonify({'error': 'Invalid data'}), 400
+    # TypeError: Object of type ndarray is not JSON serializable
+    # Erro ao retornar predictions direto no endpoint
+    return jsonify(predictions)
 
 app.run()

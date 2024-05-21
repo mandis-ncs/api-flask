@@ -23,3 +23,8 @@
 
   ]
 }
+
+
+no lugar de new_data no model, tem que puxar do 'test.csv'
+tem que tirar as funções da main, para por no model, incluindo as funções de receber dados etc
+os metodos da api tem que ir para o control

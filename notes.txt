@@ -1,0 +1,25 @@
+{
+  "responses": [
+    {
+  "Case_No": 1,
+  "A1": 0,
+  "A2": 0,
+  "A3": 0,
+  "A4": 0,
+  "A5": 0,
+  "A6": 0,
+  "A7": 1,
+  "A8": 1,
+  "A9": 0,
+  "A10": 1,
+  "Age_Mons": 28,
+  "Sex": "f",
+  "Ethnicity": "middle eastern",
+  "Jaundice": "yes",
+  "Family_mem_with_ASD": "no",
+  "Who_completed_the_test": "family member",
+  "Class_ASD_Traits": "No"
+}
+
+  ]
+}

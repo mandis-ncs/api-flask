@@ -2,6 +2,7 @@ import os
 import pandas as pd
 
 def create_upload_folder(folder_name):
+    # Se pasta não existir, cria uma
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
 

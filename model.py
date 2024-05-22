@@ -35,7 +35,8 @@ def cross_validate_model(X, y, n_splits=10):
 
 # Função para pré-processar a nova entrada de dados
 def preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder, scaler):
-    new_data_df = pd.DataFrame([new_data], columns=categorical_cols + ['Age_Mons', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10'])
+    # Transformar new_data para DataFrame
+    new_data_df = pd.DataFrame(new_data, columns=categorical_cols + ['Age_Mons', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10'])
 
     # Codificação de rótulos para variáveis categóricas
     for col, encoder in label_encoders.items():
@@ -52,6 +53,15 @@ def preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encod
     new_data_preprocessed = pd.concat([new_data_df.drop(categorical_cols, axis=1), categorical_df], axis=1)
 
     return new_data_preprocessed
+
+# Função para fazer previsões a partir de um arquivo CSV
+def predict_from_csv(csv_path, model_path, categorical_cols, label_encoders, onehot_encoder, scaler):
+    new_data = pd.read_csv(csv_path)
+    new_data_preprocessed = preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder, scaler)
+    model = load_model(model_path)
+    pred_probabilities = model.predict(new_data_preprocessed)
+    predictions = (pred_probabilities > 0.5).astype(int)
+    return predictions
 
 # Carregar e pré-processar os dados
 X, y = load_and_preprocess_data('dataset.csv')
@@ -73,39 +83,3 @@ label_encoders = {
 }
 onehot_encoder = joblib.load('onehot_encoder.pkl')
 scaler = joblib.load('scaler_Age_Mons.pkl')
-
-# Nova entrada de dados (exemplo de uma criança que não possui autismo)
-new_data = {
-    "Case_No": 2574,
-    "A1": 0,
-    "A2": 0,
-    "A3": 0,
-    "A4": 0,
-    "A5": 0,
-    "A6": 0,
-    "A7": 0,
-    "A8": 0,
-    "A9": 0,
-    "A10": 0,
-    "Age_Mons": 36,
-    "Sex": "f",
-    "Ethnicity": "White European",
-    "Jaundice": "no",
-    "Family_mem_with_ASD": "no",
-    "Who_completed_the_test": "family member",
-    "Class/ASD_Traits": "No"
-}
-
-
-
-# Pré-processar a nova entrada de dados
-new_data_preprocessed = preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder, scaler)
-
-# Carregar o modelo salvo
-model = load_model('autism_prediction_model.keras')
-
-pred_probabilities = model.predict(new_data_preprocessed)
-predictions = (pred_probabilities > 0.5).astype(int)
-
-# Interpretação da previsão
-print(predictions)

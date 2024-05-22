@@ -24,7 +24,29 @@
   ]
 }
 
+{
+    "Case_No": 2,
+    "A1": 1,
+    "A2": 1,
+    "A3": 0,
+    "A4": 0,
+    "A5": 0,
+    "A6": 1,
+    "A7": 1,
+    "A8": 0,
+    "A9": 0,
+    "A10": 0,
+    "Age_Mons": 36,
+    "Sex": "m",
+    "Ethnicity": "White European",
+    "Jaundice": "yes",
+    "Family_mem_with_ASD": "no",
+    "Who_completed_the_test": "family member",
+    "Class/ASD_Traits": "Yes"
+}
+
 
 no lugar de new_data no model, tem que puxar do 'test.csv'
 tem que tirar as funções da main, para por no model, incluindo as funções de receber dados etc
 os metodos da api tem que ir para o control
+

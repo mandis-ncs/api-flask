@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from utils import create_upload_folder, save_csv, delete_csv
 from model import predictions
+import numpy as np
 
 # Instanciar flask
 app = Flask('__name__')
@@ -30,8 +31,9 @@ def upload_data():
 #add codigo rede neural
 #pegar o valor da probabilidade
 #devolver para kotlin no metodo GET
-#apagar teste.csv (juntar a base original antes de apagar?)
+#apagar teste.csv
 #gerar requirements.txt
+#git ignore
 
 @app.route('/resultado', methods=['GET'])
 def send_result():
@@ -39,6 +41,11 @@ def send_result():
         return jsonify({'error': 'Invalid data'}), 400
     # TypeError: Object of type ndarray is not JSON serializable
     # Erro ao retornar predictions direto no endpoint
-    return jsonify(predictions)
+
+    # Extract the first value from predictions
+    result_value = predictions[0][0] if isinstance(predictions[0], (list, np.ndarray)) else predictions[0]
+
+    # Return the result as a JSON response
+    return jsonify({"resultado": str(result_value)})
 
 app.run()

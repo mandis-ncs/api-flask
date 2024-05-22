@@ -8,7 +8,7 @@ import joblib
 def load_and_preprocess_data(filepath):
     data = pd.read_csv(filepath)
 
-    # Codificação dos rótulos da classe alvo
+    # Codificação dos rótulos da classe alvo (Class/ASD Traits )
     label_encoder = LabelEncoder()
     data['Class/ASD Traits '] = label_encoder.fit_transform(data['Class/ASD Traits '])
 
@@ -34,6 +34,7 @@ def load_and_preprocess_data(filepath):
     # Criar um DataFrame com os dados categóricos codificados
     categorical_df = pd.DataFrame(categorical_data, columns=onehot_encoder.get_feature_names_out(categorical_cols))
 
+    # ERRO PODE SER AQUI
     # Concatenar com o DataFrame original (sem as colunas categóricas originais)
     data_preprocessed = pd.concat([data.drop(categorical_cols + ['Who completed the test', 'Case_No'], axis=1), categorical_df], axis=1)
 

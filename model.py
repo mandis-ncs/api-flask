@@ -72,21 +72,24 @@ onehot_encoder = joblib.load('onehot_encoder.pkl')
 
 # Nova entrada de dados (exemplo de uma criança que não possui autismo)
 new_data = {
-    'Sex': 'f',
-    'Ethnicity': 'White European',
-    'Jaundice': 'no',
-    'Family_mem_with_ASD': 'no',
-    'Age_Mons': 36,
-    'A1': 0,
-    'A2': 0,
-    'A3': 0,
-    'A4': 0,
-    'A5': 0,
-    'A6': 0,
-    'A7': 0,
-    'A8': 0,
-    'A9': 0,
-    'A10': 0
+    "Case_No": 1,
+    "A1": 0,
+    "A2": 0,
+    "A3": 0,
+    "A4": 0,
+    "A5": 0,
+    "A6": 0,
+    "A7": 1,
+    "A8": 1,
+    "A9": 0,
+    "A10": 1,
+    "Age_Mons": 28,
+    "Sex": "f",
+    "Ethnicity": "middle eastern",
+    "Jaundice": "yes",
+    "Family_mem_with_ASD": "no",
+    "Who_completed_the_test": "family member",
+    "Class/ASD_Traits": "No"
 }
 
 # Pré-processar a nova entrada de dados

@@ -8,7 +8,6 @@ from data_preparation import load_and_preprocess_data
 import joblib
 import pandas as pd
 
-# Função para criar o modelo
 def create_model(input_shape):
     model = Sequential()
     model.add(Input(shape=(input_shape,)))
@@ -18,6 +17,7 @@ def create_model(input_shape):
     model.add(Dropout(0.5))
     model.add(Dense(1, activation="sigmoid"))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    print(f'\n\nmodel:\n\n{model}')
     return model
 
 # Função para realizar a validação cruzada
@@ -34,7 +34,7 @@ def cross_validate_model(X, y, n_splits=10):
     return accuracies
 
 # Função para pré-processar a nova entrada de dados
-def preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder):
+def preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder, scaler):
     new_data_df = pd.DataFrame([new_data], columns=categorical_cols + ['Age_Mons', 'A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10'])
 
     # Codificação de rótulos para variáveis categóricas
@@ -42,9 +42,12 @@ def preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encod
         new_data_df[col] = encoder.transform(new_data_df[col])
 
     # Aplicar OneHotEncoder para variáveis categóricas
-    categorical_data = onehot_encoder.transform(new_data_df[categorical_cols]).toarray()
+    categorical_data = onehot_encoder.transform(new_data_df[categorical_cols])
     categorical_df = pd.DataFrame(categorical_data, columns=onehot_encoder.get_feature_names_out(categorical_cols))
-    
+
+    # Normalizar a coluna Age_Mons
+    new_data_df['Age_Mons'] = scaler.transform(new_data_df[['Age_Mons']])
+
     # Concatenar com o DataFrame original
     new_data_preprocessed = pd.concat([new_data_df.drop(categorical_cols, axis=1), categorical_df], axis=1)
 
@@ -69,31 +72,34 @@ label_encoders = {
     col: joblib.load(f'label_encoder_{col}.pkl') for col in categorical_cols
 }
 onehot_encoder = joblib.load('onehot_encoder.pkl')
+scaler = joblib.load('scaler_Age_Mons.pkl')
 
 # Nova entrada de dados (exemplo de uma criança que não possui autismo)
 new_data = {
-    "Case_No": 1,
+    "Case_No": 2574,
     "A1": 0,
     "A2": 0,
     "A3": 0,
     "A4": 0,
     "A5": 0,
     "A6": 0,
-    "A7": 1,
-    "A8": 1,
+    "A7": 0,
+    "A8": 0,
     "A9": 0,
-    "A10": 1,
-    "Age_Mons": 28,
+    "A10": 0,
+    "Age_Mons": 36,
     "Sex": "f",
-    "Ethnicity": "middle eastern",
-    "Jaundice": "yes",
+    "Ethnicity": "White European",
+    "Jaundice": "no",
     "Family_mem_with_ASD": "no",
     "Who_completed_the_test": "family member",
     "Class/ASD_Traits": "No"
 }
 
+
+
 # Pré-processar a nova entrada de dados
-new_data_preprocessed = preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder)
+new_data_preprocessed = preprocess_new_data(new_data, categorical_cols, label_encoders, onehot_encoder, scaler)
 
 # Carregar o modelo salvo
 model = load_model('autism_prediction_model.keras')

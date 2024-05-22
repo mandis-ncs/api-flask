@@ -28,9 +28,7 @@ def upload_data():
     save_csv(responses, csv_path)
     return responses
 
-#add codigo rede neural
-#pegar o valor da probabilidade
-#devolver para kotlin no metodo GET
+#add codigo rede neural, no lugar de 'new data' vai o teste.csv
 #apagar teste.csv
 #gerar requirements.txt
 #git ignore
@@ -39,9 +37,7 @@ def upload_data():
 def send_result():
     if not predictions or len(predictions) == 0:
         return jsonify({'error': 'Invalid data'}), 400
-    # TypeError: Object of type ndarray is not JSON serializable
-    # Erro ao retornar predictions direto no endpoint
-
+    
     # Extract the first value from predictions
     result_value = predictions[0][0] if isinstance(predictions[0], (list, np.ndarray)) else predictions[0]
 

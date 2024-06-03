@@ -10,6 +10,8 @@
 
 Este projeto implementa uma Rede Neural Multicamadas (MLP) para auxiliar no pré-diagnóstico de crianças de 0 a 4 anos com manifestações comportamentais do Transtorno do Espectro Autista (TEA).
 
+**Base de dado**: [Autism screening data for toddlers](https://www.kaggle.com/datasets/fabdelja/autism-screening-for-toddlers?resource=download)
+
 ### Dependências 💜
 O projeto usa as seguintes bibliotecas:
 

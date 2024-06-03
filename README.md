@@ -10,8 +10,6 @@
 
 Este projeto implementa uma Rede Neural Multicamadas (MLP) para auxiliar no pré-diagnóstico de crianças de 0 a 4 anos com manifestações comportamentais do Transtorno do Espectro Autista (TEA).
 
-**Base de dado**: [Autism screening data for toddlers](https://www.kaggle.com/datasets/fabdelja/autism-screening-for-toddlers?resource=download)
-
 ### Dependências 💜
 O projeto usa as seguintes bibliotecas:
 
@@ -35,6 +33,22 @@ O projeto consiste em várias partes:
 5. **Treinamento do modelo final**: O script principal carrega e pré-processa os dados, realiza a validação cruzada, treina o modelo final em todos os dados e salva o modelo treinado.
 
 6. **API Flask**: O projeto inclui uma API Flask que recebe respostas via POST, salva as respostas em um arquivo CSV e retorna previsões via GET. O resultado da predição é retornado com valor `'1'` para casos positivos de TEA ou valor `'0'` para casos negativos, indicando ausência de sinais de TEA.
+
+### Base de treinamento 💜
+
+**Base de dados**: [Autism screening data for toddlers](https://www.kaggle.com/datasets/fabdelja/autism-screening-for-toddlers?resource=download) <br>
+**Tarefa**: Classificação <br>
+**Número de Instâncias**: 1054 <br>
+**Autor**: Fadi Fayez Thabtah <br>
+
+A base de dados utilizada no projeto teve seu conjunto de dados coletados com base no **Q-Chat-10**, um questionário utilizado para avaliar traços de Transtorno do Espectro Autista (TEA) em crianças pequenas. Aqui estão os principais detalhes:
+
+- O Q-Chat-10 é composto por 10 perguntas.
+- As respostas possíveis para cada pergunta são: “Sempre”, “Normalmente”, “Às vezes”, “Raramente” e “Nunca”.
+- Os valores das respostas são mapeados para “1” ou “0” no conjunto de dados.
+- Para as perguntas de 1 a 9 (A1-A9), se a resposta foi “Às vezes”, “Raramente” ou “Nunca”, é atribuído o valor “1” à pergunta.
+- Para a pergunta 10 (A10), se a resposta foi “Sempre”, “Normalmente” ou “Às vezes”, é atribuído o valor “1”.
+- Se a soma dos pontos para todas as dez perguntas for maior que 3, há um potencial de traços de TEA. Caso contrário, não há traços de TEA observados.
 
 ## Iniciando o projeto 💜
 

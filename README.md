@@ -6,7 +6,7 @@
   <img src="https://github.com/aasjunior/com.sofia.mobile/assets/85968113/ce5ba98e-c63a-4fb7-a311-ced454084bc7" width="700" alt="ilustracao">
 </p>
 
-## REDE NEURAL MLP PARA PREDIÇÃO DE AUTISMO 💜
+## Rede Neural MLP Para Predição de TEA 💜
 
 Este projeto implementa uma Rede Neural Multicamadas (MLP) para auxiliar no pré-diagnóstico de crianças de 0 a 4 anos com manifestações comportamentais do Transtorno do Espectro Autista (TEA).
 
@@ -32,7 +32,7 @@ O projeto consiste em várias partes:
 
 5. **Treinamento do modelo final**: O script principal carrega e pré-processa os dados, realiza a validação cruzada, treina o modelo final em todos os dados e salva o modelo treinado.
 
-6. **API Flask**: O projeto inclui uma API Flask que recebe respostas via POST, salva as respostas em um arquivo CSV e retorna previsões via GET. O resultado da predição é retornado com valor `'1'` para casos positivos de TEA ou valor `'0'` para casos negativos, indicando ausência de sinais de TEA.
+6. **FastAPI**: O projeto inclui uma API que recebe respostas via POST, salva as respostas em um arquivo CSV e retorna previsões via GET. O resultado da predição é retornado com valor `'1'` para casos positivos de TEA ou valor `'0'` para casos negativos, indicando ausência de sinais de TEA.
 
 ### Base de treinamento 💜
 
@@ -61,23 +61,23 @@ A base de dados utilizada no projeto teve seu conjunto de dados coletados com ba
 
 1. Clone o repositório para o seu computador:
 
-```
+```bash
 git clone https://github.com/mandis-ncs/api-flask.git
 ```
 
 2. Abra o projeto pelo VSCode e execute o comando pelo terminal: 
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
 3. Navegue até o diretório `app` e execute:
 
-```Python
-python main.py
+```bash
+uvicorn main:app --reload
 ```
 
-4. A API estará rodando em `http://127.0.0.1:5000`
+4. A API estará rodando em `http://127.0.0.1:8000`
 <br>
 
 ## Endpoints 💜
@@ -99,7 +99,6 @@ A API possui os seguintes endpoints:
 {
   "responses": [
     {
-  "Case_No": 1,
   "A1": 0,
   "A2": 0,
   "A3": 0,
@@ -112,10 +111,9 @@ A API possui os seguintes endpoints:
   "A10": 1,
   "Age_Mons": 28,
   "Sex": "f",
-  "Ethnicity": "middle eastern",
+  "Ethnicity": "black",
   "Jaundice": "yes",
   "Family_mem_with_ASD": "no",
-  "Who_completed_the_test": "family member",
   "Class_ASD_Traits": ""
 }
 
@@ -139,7 +137,7 @@ A API possui os seguintes endpoints:
    <img src="https://github.com/aasjunior/com.sofia.mobile/assets/85968113/adc364c7-8401-4326-ad56-3807673b85f2" width="600px" alt="Android"/>
    <div align="center">
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-    <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask"/>
+    <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI"/>
     <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow"/>
     <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" alt="Keras"/>     
         

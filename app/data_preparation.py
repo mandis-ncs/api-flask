@@ -22,14 +22,14 @@ def load_and_preprocess_data(filepath):
 
     # Salvar os label encoders
     for col, encoder in label_encoders.items():
-        joblib.dump(encoder, f'label_encoder_{col}.pkl')
+        joblib.dump(encoder, f'assets/pickles/label_encoder_{col}.pkl')
 
     # Aplicar OneHotEncoder para variáveis categóricas
     onehot_encoder = OneHotEncoder(sparse_output=False, drop='first')
     categorical_data = onehot_encoder.fit_transform(data[categorical_cols])
     
     # Salvar o OneHotEncoder
-    joblib.dump(onehot_encoder, 'onehot_encoder.pkl')
+    joblib.dump(onehot_encoder, 'assets/pickles/onehot_encoder.pkl')
 
     # Criar um DataFrame com os dados categóricos codificados
     categorical_df = pd.DataFrame(categorical_data, columns=onehot_encoder.get_feature_names_out(categorical_cols))
@@ -42,7 +42,7 @@ def load_and_preprocess_data(filepath):
     data_preprocessed['Age_Mons'] = scaler.fit_transform(data_preprocessed[['Age_Mons']])
 
     # Salvar o scaler
-    joblib.dump(scaler, 'scaler_Age_Mons.pkl')
+    joblib.dump(scaler, 'assets/pickles/scaler_Age_Mons.pkl')
 
     # Separar os recursos (features) e os rótulos (labels)
     X = data_preprocessed.drop('Class/ASD Traits ', axis=1)

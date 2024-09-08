@@ -63,7 +63,7 @@ def predict_from_csv(csv_path, model_path, categorical_cols, label_encoders, one
     return predictions
 
 # Carregar e pré-processar os dados
-X, y = load_and_preprocess_data('dataset.csv')
+X, y = load_and_preprocess_data('assets/db/dataset.csv')
 
 # Aplicar a validação cruzada
 accuracies = cross_validate_model(X, y, n_splits=10)
@@ -73,12 +73,12 @@ print("Média da Acurácia:", np.mean(accuracies))
 # Treinar o modelo final em todos os dados e salvar o modelo treinado
 final_model = create_model(X.shape[1])
 final_model.fit(X, y, epochs=30, batch_size=32, verbose=0)
-final_model.save('autism_prediction_model.keras')
+final_model.save('assets/db/autism_prediction_model.keras')
 
 # Carregar os encoders salvos
 categorical_cols = ['Sex', 'Ethnicity', 'Jaundice', 'Family_mem_with_ASD']
 label_encoders = {
-    col: joblib.load(f'label_encoder_{col}.pkl') for col in categorical_cols
+    col: joblib.load(f'assets/pickles/label_encoder_{col}.pkl') for col in categorical_cols
 }
-onehot_encoder = joblib.load('onehot_encoder.pkl')
-scaler = joblib.load('scaler_Age_Mons.pkl')
+onehot_encoder = joblib.load('assets/pickles/onehot_encoder.pkl')
+scaler = joblib.load('assets/pickles/scaler_Age_Mons.pkl')

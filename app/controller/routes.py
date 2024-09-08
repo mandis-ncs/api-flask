@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 from models.ResponseItem import ResponseModel
 from models.config import UPLOADS_FOLDER
 from service.NeuralNetwork import NeuralNetworkService
@@ -9,19 +9,25 @@ import os
 router = APIRouter()
 neural_network_service = NeuralNetworkService()
 
-@router.post('/respostas')
+@router.post('/respostas', status_code=status.HTTP_201_CREATED)
 async def upload_data(data: ResponseModel):
-    # Cria pasta uploads se nao existir
-    create_upload_folder(UPLOADS_FOLDER)
+    try:
+        # Cria pasta uploads se nao existir
+        create_upload_folder(UPLOADS_FOLDER)
 
-    responses = data.responses
-    csv_path = os.path.join(UPLOADS_FOLDER, 'teste.csv')
+        responses = data.responses
+        csv_path = os.path.join(UPLOADS_FOLDER, 'teste.csv')
 
-    save_csv(responses, csv_path)
-    return {'status': 'received', 'data': data}
+        save_csv(responses, csv_path)
+        return {'status': 'received', 'data': data}
+    
+    except OSError as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao manipular o arquivo: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
 
 
-@router.get('/resultado')
+@router.get('/resultado', status_code=status.HTTP_200_OK)
 async def send_result():
     csv_path = os.path.join(UPLOADS_FOLDER, 'teste.csv')
     
@@ -40,5 +46,11 @@ async def send_result():
 
         return {'resultado': str(result_value)}
     
-    except Exception as e:
+    except FileNotFoundError as e:
         raise HTTPException(status_code=500, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"Erro nos dados de entrada: {e}")
+    except OSError as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao acessar o arquivo: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")

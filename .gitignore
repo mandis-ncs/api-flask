@@ -1,4 +1,5 @@
-*__pycache__
 venv
-*/*.keras
-*/*.pkl
+*/uploads
+*__pycache__
+*.keras
+*.pkl

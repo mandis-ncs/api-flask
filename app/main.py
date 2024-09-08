@@ -1,8 +1,13 @@
 from fastapi import FastAPI
 from controller.routes import router
+from service.NeuralNetwork import NeuralNetworkService
+import pandas as pd
 
 app = FastAPI()
 app.include_router(router)
+
+nn_service = NeuralNetworkService()
+nn_service.train_and_save_model()
 
 # uvicorn main:app --reload
 if __name__ == '__main__':

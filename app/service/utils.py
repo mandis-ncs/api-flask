@@ -13,7 +13,6 @@ def save_csv(data, path):
     # Criar uma lista de dicionários com apenas os valores
     dict_data = [
         {
-            'Case_No': item.Case_No,
             'A1': item.A1,
             'A2': item.A2,
             'A3': item.A3,
@@ -29,7 +28,6 @@ def save_csv(data, path):
             'Ethnicity': item.Ethnicity,
             'Jaundice': item.Jaundice,
             'Family_mem_with_ASD': item.Family_mem_with_ASD,
-            'Who_completed_the_test': item.Who_completed_the_test,
             'Class_ASD_Traits': item.Class_ASD_Traits
         } for item in data
     ]

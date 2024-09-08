@@ -1,8 +1,8 @@
-Flask
+fastapi
 joblib
 keras
 numpy
 pandas
+pydantic
 scikit_learn
-tensorflow
-tabulate
+uvicorn

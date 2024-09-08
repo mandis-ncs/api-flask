@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import List, Optional
 
 class ResponseItem(BaseModel):
-    Case_No: int
     A1: int
     A2: int
     A3: int
@@ -18,7 +17,6 @@ class ResponseItem(BaseModel):
     Ethnicity: str
     Jaundice: str
     Family_mem_with_ASD: str
-    Who_completed_the_test: str
     Class_ASD_Traits: Optional[str]
 
 class ResponseModel(BaseModel):

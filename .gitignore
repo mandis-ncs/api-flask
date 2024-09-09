@@ -2,5 +2,5 @@ venv
 */uploads
 *__pycache__
 *.keras
-*.pkl
+assets/pickles/
 *qchat.db

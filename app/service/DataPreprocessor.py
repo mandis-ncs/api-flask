@@ -28,7 +28,7 @@ class DataPreprocessor:
         missing_cols = set(self.categorical_cols + ['Age_Mons']).difference(self.data_model.columns)
         
         if missing_cols:
-            raise ValueError(f'\nColunas faltantes no DataFrame: {missing_cols}')
+            raise ValueError(f'Colunas faltantes no DataFrame: {missing_cols}')
 
     def _preprocess_labels(self):
         try:
@@ -50,7 +50,7 @@ class DataPreprocessor:
                 jb.dump(encoder, f'{PKL_FOLDER}/label_encoder_{col}.pkl')
 
         except Exception as e:
-            raise RuntimeError(f'\nErro na codificação das labels da classe alvo: \n{e}\n')
+            raise RuntimeError(f'Erro na codificação das labels da classe alvo: {e}')
 
 
     def _preprocess_categorical(self):
@@ -68,7 +68,7 @@ class DataPreprocessor:
             self.data_preprocessed = pd.concat([self.data_model.drop(self.categorical_cols, axis=1), self.categorical_df], axis=1)
 
         except Exception as e:
-            raise RuntimeError(f'\nErro no processamento das variáveis categóricas: \n{e}\n')
+            raise RuntimeError(f'Erro no processamento das variáveis categóricas: {e}')
 
 
     def _normalize_age(self):
@@ -80,7 +80,7 @@ class DataPreprocessor:
             jb.dump(self.scaler, f'{PKL_FOLDER}/scaler_Age_Mons.pkl')
 
         except Exception as e:
-            raise RuntimeError(f'\nErro ao tentar normalizar a coluna Age_Mons: \n{e}\n')
+            raise RuntimeError(f'Erro ao tentar normalizar a coluna Age_Mons: {e}')
 
 
     def initialize(self):
@@ -96,4 +96,4 @@ class DataPreprocessor:
             return X, y
         
         except Exception as e:
-            raise RuntimeError(f'\nErro no pré-processamento dos dados: \n{e}\n')
+            raise RuntimeError(f'Erro no pré-processamento dos dados: {e}')

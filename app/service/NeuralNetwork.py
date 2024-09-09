@@ -1,8 +1,10 @@
 from service.DataPreprocessor import DataPreprocessor
 from models.config import UPLOADS_FOLDER, PKL_FOLDER, DB_FOLDER, CATEGORICAL_COLS
+from models.ResponseEntity import ResponseEntity
 from keras.api.models import Sequential, load_model
 from keras.api.layers import Dense, Dropout, Input
 from sklearn.model_selection import KFold
+from sqlalchemy.orm import Session
 from typing import List
 import joblib as jb
 import pandas as pd
@@ -57,7 +59,7 @@ class NeuralNetworkService:
             return model
         
         except Exception as e:
-            raise RuntimeError(f'\nErro na criação do modelo da rede neural: \n{e}\n')
+            raise RuntimeError(f'Erro na criação do modelo da rede neural: {e}')
         
     
     def _cross_validate_model(self, X: pd.DataFrame, y: pd.Series) -> List[float]:
@@ -83,7 +85,7 @@ class NeuralNetworkService:
             return accuracies
         
         except Exception as e:
-            raise RuntimeError(f'\nErro na validação cruzada: \n{e}\n')
+            raise RuntimeError(f'Erro na validação cruzada: {e}')
 
 
     def _preprocess_new_data(self, new_data: pd.DataFrame, label_encoders, onehot_encoder, scaler) -> pd.DataFrame:
@@ -117,7 +119,7 @@ class NeuralNetworkService:
             return new_data_preprocessed
         
         except Exception as e:
-            raise ValueError(f'\nErro ao pré-processar novos dados: \n{e}\n')
+            raise ValueError(f'Erro ao pré-processar novos dados: {e}')
 
 
     def predict_from_csv(self, csv_path: str, label_encoders, onehot_encoder, scaler) -> np.ndarray:
@@ -141,9 +143,67 @@ class NeuralNetworkService:
             return predictions
         
         except FileNotFoundError:
-            raise FileNotFoundError(f'\nArquivo {csv_path} não encontrado.')
+            raise FileNotFoundError(f'Arquivo {csv_path} não encontrado.')
         except Exception as e:
-            raise RuntimeError(f'\nErro ao fazer as previsões: \n{e}\n')
+            raise RuntimeError(f'Erro ao fazer as previsões: {e}')
+        
+    
+    def predict_from_db(self, record_id: int, db: Session) -> np.ndarray:
+        """
+        Faz previsões a partir de um registro no banco de dados.
+
+        :param record_id: ID do registro no banco de dados.
+        :param db: Sessão do banco de dados.
+        :return: Array com as previsões.
+        """
+        try:
+            # Buscar o registro no banco de dados
+            record = db.query(ResponseEntity).filter(ResponseEntity.id == record_id).first()
+            
+            if record is None:
+                raise ValueError(f'Registro com ID {record_id} não encontrado.')
+            
+            # Preparar os dados para o modelo
+            record_data = {
+                'A1': record.A1,
+                'A2': record.A2,
+                'A3': record.A3,
+                'A4': record.A4,
+                'A5': record.A5,
+                'A6': record.A6,
+                'A7': record.A7,
+                'A8': record.A8,
+                'A9': record.A9,
+                'A10': record.A10,
+                'Age_Mons': record.Age_Mons,
+                'Sex': record.Sex,
+                'Ethnicity': record.Ethnicity,
+                'Jaundice': record.Jaundice,
+                'Family_mem_with_ASD': record.Family_mem_with_ASD,
+                'Class_ASD_Traits': record.Class_ASD_Traits
+            }
+
+            # Obter encoders e scaler
+            label_encoders, onehot_encoder, scaler = self.get_encoders()
+
+            # Pré-processar os dados
+            data_df = pd.DataFrame([record_data])
+            data_preprocessed = self._preprocess_new_data(
+                data_df,
+                label_encoders,
+                onehot_encoder,
+                scaler
+            )
+            
+            # Fazer a previsão
+            model = load_model(MODEL_PATH)
+            pred_probabilities = model.predict(data_preprocessed)
+            predictions = (pred_probabilities > 0.5).astype(int)
+
+            return predictions
+        
+        except Exception as e:
+            raise RuntimeError(f'Erro ao fazer a previsão a partir do banco de dados: {e}')
         
     
     def train_and_save_model(self):
@@ -159,18 +219,18 @@ class NeuralNetworkService:
 
             # Aplicar a validação cruzada
             accuracies = self._cross_validate_model(X, y)
-            print(f'Acurácias da Validação Cruzada: {accuracies}')
-            print(f'\nMédia da Acurácia: {np.mean(accuracies)}')
+            print(f'\nAcurácias da Validação Cruzada: \n{accuracies}\n')
+            print(f'\nMédia da Acurácia: {np.mean(accuracies)}\n')
 
             # Treinar o modelo final em todos os dados e salvar o modelo treinado
             final_model = self._create_model(X.shape[1])
             final_model.fit(X, y, epochs=self.epochs, batch_size=self.batch_size, verbose=0)
             final_model.save(MODEL_PATH)
 
-            print(f'Modelo salvo em {MODEL_PATH}')
+            print(f'\nModelo salvo em {MODEL_PATH}\n')
 
         except Exception as e:
-            raise RuntimeError(f'Erro ao treinar e salvar o modelo: \n{e}\n')
+            raise RuntimeError(f'Erro ao treinar e salvar o modelo: {e}')
 
 
     def get_encoders(self):
@@ -188,4 +248,4 @@ class NeuralNetworkService:
             return label_encoders, onehot_encoder, scaler
     
         except Exception as e:
-            raise RuntimeError(f'Erro durante a inicialização da rede neural: \n{e}\n')
+            raise RuntimeError(f'Erro durante a inicialização da rede neural: {e}')

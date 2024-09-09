@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from models.ResponseItem import ResponseItem
+from models.ResponseEntity import ResponseEntity
 from models.config import UPLOADS_FOLDER
 from service.NeuralNetwork import NeuralNetworkService
 from service.utils import create_upload_folder, save_csv, delete_csv
-from service.crud import get_db, create
+from service.database import get_db, create
 from sqlalchemy.orm import Session
 import numpy as np
 import os
@@ -25,22 +26,12 @@ async def upload_data(data: ResponseItem, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
 
 
-@router.get('/resultado', status_code=status.HTTP_200_OK)
-async def send_result():
-    csv_path = os.path.join(UPLOADS_FOLDER, 'teste.csv')
-    
-    if not os.path.exists(csv_path):
-        raise HTTPException(status_code=404, detail='CSV file not found')    
-
+@router.get('/resultado/{id}', status_code=status.HTTP_200_OK)
+async def send_result(id: int, db: Session = Depends(get_db)):
     try:
-        
-        label_encoders, onehot_encoder, scaler = neural_network_service.get_encoders()
-
-        predictions = neural_network_service.predict_from_csv(csv_path, label_encoders, onehot_encoder, scaler)
-
+        # Fazer a previsão a partir do banco de dados
+        predictions = neural_network_service.predict_from_db(id, db)
         result_value = predictions[0][0] if isinstance(predictions[0], (list, np.ndarray)) else predictions[0]
-        
-        delete_csv(csv_path)
 
         return {'resultado': str(result_value)}
     

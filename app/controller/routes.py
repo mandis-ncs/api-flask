@@ -1,8 +1,10 @@
-from fastapi import APIRouter, HTTPException, status
-from models.ResponseItem import ResponseModel
+from fastapi import APIRouter, HTTPException, status, Depends
+from models.ResponseItem import ResponseItem
 from models.config import UPLOADS_FOLDER
 from service.NeuralNetwork import NeuralNetworkService
 from service.utils import create_upload_folder, save_csv, delete_csv
+from service.crud import get_db, create
+from sqlalchemy.orm import Session
 import numpy as np
 import os
 
@@ -10,16 +12,12 @@ router = APIRouter()
 neural_network_service = NeuralNetworkService()
 
 @router.post('/respostas', status_code=status.HTTP_201_CREATED)
-async def upload_data(data: ResponseModel):
+async def upload_data(data: ResponseItem, db: Session = Depends(get_db)):
     try:
         # Cria pasta uploads se nao existir
-        create_upload_folder(UPLOADS_FOLDER)
+        id = create(db, data)
 
-        responses = data.responses
-        csv_path = os.path.join(UPLOADS_FOLDER, 'teste.csv')
-
-        save_csv(responses, csv_path)
-        return {'status': 'received', 'data': data}
+        return {'status': 'received', 'qchat_id': id, 'data': data}
     
     except OSError as e:
         raise HTTPException(status_code=500, detail=f"Erro ao manipular o arquivo: {e}")

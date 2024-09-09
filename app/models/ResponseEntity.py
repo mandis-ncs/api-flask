@@ -1,7 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Integer
+from sqlalchemy import Column, Integer, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from typing import Optional
 
 Base = declarative_base()
 

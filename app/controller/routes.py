@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from models.ResponseItem import ResponseItem
 from models.ResponseEntity import ResponseEntity
+from metrics.plot_accuracy_by_epochs import plot_accuracy_by_epochs
 from models.config import UPLOADS_FOLDER
 from service.NeuralNetwork import NeuralNetworkService
 from service.utils import create_upload_folder, save_csv, delete_csv
@@ -41,5 +42,14 @@ async def send_result(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=f"Erro nos dados de entrada: {e}")
     except OSError as e:
         raise HTTPException(status_code=500, detail=f"Erro ao acessar o arquivo: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
+
+
+@router.get('/metrics', status_code=status.HTTP_200_OK)
+async def get_metrics():
+    try:
+        plot_accuracy_by_epochs()
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")

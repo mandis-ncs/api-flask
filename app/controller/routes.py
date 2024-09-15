@@ -45,9 +45,7 @@ async def send_result(id: int, db: Session = Depends(get_db)):
 @router.get('/metrics/accuracy_by_epochs', status_code=status.HTTP_200_OK)
 async def get_metrics():
     try:
-        plot_accuracy_by_epochs()
-
-        return {'resultado': 'ok'}
+        return plot_accuracy_by_epochs()
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
@@ -57,9 +55,7 @@ async def get_metrics():
 async def get_metrics():
     try:
         DATA_PATH = 'assets/db/dataset.csv'
-        evaluate_accuracy_by_sample_size(DATA_PATH, 105, 1050, 105)
-
-        return {'resultado': 'ok'}
+        return evaluate_accuracy_by_sample_size(DATA_PATH, 105, 1050, 105)
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")

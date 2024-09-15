@@ -1,5 +1,6 @@
 from service.NeuralNetwork import NeuralNetworkService, DATA_PATH
 from service.DataPreprocessor import DataPreprocessor
+from models.config import PLOT_FOLDER
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -33,7 +34,7 @@ def plot_accuracy_by_epochs():
         plt.ylabel('Acurácia Média')
         plt.xticks(epochs_list)
         plt.grid(True)
-        plt.savefig('./grafico_acuracia_epocas.png', format='png', dpi=300)
+        plt.savefig(f'{PLOT_FOLDER}/accuracy_by_epochs.png', format='png', dpi=300)
         plt.show()
 
     except Exception as e:

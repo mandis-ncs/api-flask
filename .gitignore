@@ -4,3 +4,4 @@ venv
 *.keras
 assets/pickles/
 *qchat.db
+.pytest_cache

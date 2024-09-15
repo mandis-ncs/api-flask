@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from models.ResponseItem import ResponseItem
 from models.ResponseEntity import ResponseEntity
 from metrics.plot_accuracy_by_epochs import plot_accuracy_by_epochs
-from models.config import UPLOADS_FOLDER
+from metrics.evaluate_accuracy_by_sample_size import evaluate_accuracy_by_sample_size
 from service.NeuralNetwork import NeuralNetworkService
 from service.utils import create_upload_folder, save_csv, delete_csv
 from service.database import get_db, create
@@ -46,10 +46,24 @@ async def send_result(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
 
 
-@router.get('/metrics', status_code=status.HTTP_200_OK)
+@router.get('/metrics/accuracy_by_epochs', status_code=status.HTTP_200_OK)
 async def get_metrics():
     try:
         plot_accuracy_by_epochs()
+
+        return {'resultado': 'ok'}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
+    
+
+@router.get('/metrics/accuracy_by_sample_size', status_code=status.HTTP_200_OK)
+async def get_metrics():
+    try:
+        DATA_PATH = 'assets/db/dataset.csv'
+        evaluate_accuracy_by_sample_size(DATA_PATH, 105, 1050, 105)
+
+        return {'resultado': 'ok'}
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")

@@ -1,5 +1,7 @@
-import os
+from imblearn.over_sampling import SMOTE
 import pandas as pd
+import os
+
 
 def create_upload_folder(folder_name):
     # Se pasta não existir, cria uma
@@ -42,3 +44,13 @@ def delete_csv(path):
     if os.path.exists(path):
         os.remove(path)
 
+
+def balance_data(X, y):
+    try:
+        smote = SMOTE(random_state=42)
+        X_resampled, y_resampled = smote.fit_resample(X, y)
+
+        return X_resampled, y_resampled
+    
+    except Exception as e:
+        raise RuntimeError(f'Erro no balanceamento dos dados: {e}')

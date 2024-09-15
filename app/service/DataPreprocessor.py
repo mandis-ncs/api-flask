@@ -1,10 +1,7 @@
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
-# from sklearn.model_selection import train_test_split
-from models.config import PKL_FOLDER, CATEGORICAL_COLS, LABEL_COL, DB_FOLDER
+from models.config import PKL_FOLDER, CATEGORICAL_COLS, LABEL_COL
 import pandas as pd
-import numpy as np
 import joblib as jb
-import os
 
 class DataPreprocessor:
     def __init__(self, filepath: str):
@@ -81,7 +78,6 @@ class DataPreprocessor:
 
         except Exception as e:
             raise RuntimeError(f'Erro ao tentar normalizar a coluna Age_Mons: {e}')
-
 
     def initialize(self):
         try:

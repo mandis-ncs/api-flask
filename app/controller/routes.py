@@ -1,10 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from models.ResponseItem import ResponseItem
-from models.ResponseEntity import ResponseEntity
-from metrics.plot_accuracy_by_epochs import plot_accuracy_by_epochs
-from metrics.evaluate_accuracy_by_sample_size import evaluate_accuracy_by_sample_size
+from metrics.evaluate_accuracy import plot_accuracy_by_epochs, evaluate_accuracy_by_sample_size
 from service.NeuralNetwork import NeuralNetworkService
-from service.utils import create_upload_folder, save_csv, delete_csv
 from service.database import get_db, create
 from sqlalchemy.orm import Session
 import numpy as np
@@ -16,7 +13,6 @@ neural_network_service = NeuralNetworkService()
 @router.post('/respostas', status_code=status.HTTP_201_CREATED)
 async def upload_data(data: ResponseItem, db: Session = Depends(get_db)):
     try:
-        # Cria pasta uploads se nao existir
         id = create(db, data)
 
         return {'status': 'received', 'qchat_id': id, 'data': data}

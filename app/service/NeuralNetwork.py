@@ -1,9 +1,11 @@
-from service.DataPreprocessor import DataPreprocessor
 from models.config import UPLOADS_FOLDER, PKL_FOLDER, DB_FOLDER, CATEGORICAL_COLS
 from models.ResponseEntity import ResponseEntity
+from service.DataPreprocessor import DataPreprocessor
+from service.utils import balance_data
 from keras.api.models import Sequential, load_model
 from keras.api.layers import Dense, Dropout, Input
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedKFold
+from collections import Counter
 from sqlalchemy.orm import Session
 from typing import List
 import joblib as jb
@@ -71,13 +73,18 @@ class NeuralNetworkService:
         :return: Lista de acurácias para cada divisão.
         """
         try:
-            kfold = KFold(n_splits=self.n_splits, shuffle=True, random_state=42)
+            # kfold = KFold(n_splits=self.n_splits, shuffle=True, random_state=42)
+            
+            # StratifiedKFold mantém a proporção das classes em cada fold
+            skf = StratifiedKFold(n_splits=self.n_splits, shuffle=True, random_state=42)
             accuracies = []
 
-            for train_index, test_index in kfold.split(X):
+            for train_index, test_index in skf.split(X, y):
                 model = self._create_model(X.shape[1])
                 X_train, X_test = X.iloc[train_index], X.iloc[test_index]
                 y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+
+            
                 model.fit(X_train, y_train, epochs=self.epochs, batch_size=self.batch_size, verbose=self.verbose)
                 _, accuracy = model.evaluate(X_test, y_test, verbose=0)
                 accuracies.append(accuracy)
@@ -120,7 +127,7 @@ class NeuralNetworkService:
         
         except Exception as e:
             raise ValueError(f'Erro ao pré-processar novos dados: {e}')
-
+        
 
     def predict_from_csv(self, csv_path: str, label_encoders, onehot_encoder, scaler) -> np.ndarray:
         """
@@ -205,7 +212,7 @@ class NeuralNetworkService:
         except Exception as e:
             raise RuntimeError(f'Erro ao fazer a previsão a partir do banco de dados: {e}')
         
-    
+           
     def train_and_save_model(self):
         """
         Treina o modelo final com todos os dados e salva o modelo treinado.

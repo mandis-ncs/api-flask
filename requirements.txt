@@ -1,8 +1,15 @@
 fastapi
+httpx
+imblearn
 joblib
 keras
+tensorflow
+locust
+matplotlib
 numpy
 pandas
 pydantic
+pytest
 scikit_learn
+SQLAlchemy
 uvicorn

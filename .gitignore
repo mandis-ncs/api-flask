@@ -2,5 +2,13 @@ venv
 */uploads
 *__pycache__
 *.keras
+*.pkl
 assets/pickles/
 *qchat.db
+.pytest_cache
+app/assets/pickles/label_encoder_Ethnicity.pkl
+app/assets/pickles/label_encoder_Family_mem_with_ASD.pkl
+app/assets/pickles/label_encoder_Jaundice.pkl
+app/assets/pickles/label_encoder_Sex.pkl
+app/assets/pickles/onehot_encoder.pkl
+app/assets/pickles/scaler_Age_Mons.pkl

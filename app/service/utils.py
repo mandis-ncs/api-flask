@@ -1,5 +1,8 @@
-import os
+from imblearn.over_sampling import SMOTE
 import pandas as pd
+import base64
+import os
+
 
 def create_upload_folder(folder_name):
     # Se pasta não existir, cria uma
@@ -42,3 +45,23 @@ def delete_csv(path):
     if os.path.exists(path):
         os.remove(path)
 
+
+def balance_data(X, y):
+    try:
+        smote = SMOTE(random_state=42)
+        X_resampled, y_resampled = smote.fit_resample(X, y)
+
+        return X_resampled, y_resampled
+    
+    except Exception as e:
+        raise RuntimeError(f'Erro no balanceamento dos dados: {e}')
+    
+
+def encode_img_base64(img_path: str) -> str:
+    """Função para converter uma imagem para base64"""
+    try:
+        with open(img_path, "rb") as img_file:
+            base64_str = base64.b64encode(img_file.read()).decode('utf-8')
+        return base64_str
+    except Exception as e:
+        raise RuntimeError(f'Erro ao converter imagem para base64: {e}')

@@ -97,8 +97,6 @@ A API possui os seguintes endpoints:
 
 ```json
 {
-  "responses": [
-    {
   "A1": 0,
   "A2": 0,
   "A3": 0,
@@ -115,9 +113,6 @@ A API possui os seguintes endpoints:
   "Jaundice": "yes",
   "Family_mem_with_ASD": "no",
   "Class_ASD_Traits": ""
-}
-
-  ]
 }
 ```
 

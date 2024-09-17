@@ -1,7 +1,7 @@
 import os
 
 UPLOADS_FOLDER = 'assets/uploads'
-os.makedirs(UPLOADS_FOLDER, exist_ok=True)
+# os.makedirs(UPLOADS_FOLDER, exist_ok=True)
 PKL_FOLDER = 'assets/pickles'
 os.makedirs(PKL_FOLDER, exist_ok=True)
 DB_FOLDER = 'assets/db'

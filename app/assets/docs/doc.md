@@ -1,3 +1,5 @@
+# Acurácia x Quantidade de Épocas
+
 ![plot](./plot/accuracy_by_epochs_by_step_20.png)
 
 **Start**: 20 <br>
@@ -80,3 +82,26 @@
 | 80     | 0.9934          |
 | 90     | 0.9924          |
 | 100    | 0.9952          |
+
+
+# Acurácia x Quantidade de Instâncias (90 épocas)
+
+![plot](./plot/accuracy_by_sample_size_01.png)
+
+
+**Start**: 100 <br>
+**Step**: 100 <br>
+**Size**: 1000 <br>
+
+| Ínstâncias | Acurácia Média |
+|------------|-----------------|
+| 100        | 0.9000          |
+| 200        | 0.9300          |
+| 300        | 0.9700          |
+| 400        | 0.9725          |
+| 500        | 0.9680          |
+| 600        | 0.9850          |
+| 700        | 0.9829          |
+| 800        | 0.9850          |
+| 900        | 0.9911          |
+| 1000       | 0.9920          |

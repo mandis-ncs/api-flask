@@ -1,4 +1,5 @@
 from imblearn.over_sampling import SMOTE
+from models.config import DB_FOLDER
 import pandas as pd
 import base64
 import os
@@ -65,3 +66,31 @@ def encode_img_base64(img_path: str) -> str:
         return base64_str
     except Exception as e:
         raise RuntimeError(f'Erro ao converter imagem para base64: {e}')
+
+
+def filter_instances(qtd: int = 27):
+    df = pd.read_csv(f'{DB_FOLDER}/dataset.csv')
+
+    print(df.info())
+    print()
+    yes_instances = df[df['Class/ASD Traits'] == 'Yes'].sample(qtd)
+    no_instances = df[df['Class/ASD Traits'] == 'No'].sample(qtd)
+
+    print(yes_instances.head())
+    print()
+    print(no_instances.head())
+    print()
+    filtered_instances = pd.concat([yes_instances, no_instances])
+
+    df_filtered = df.drop(filtered_instances.index)
+
+    print(filtered_instances.info())
+    print()
+    print(df.info())
+
+    df_filtered.to_csv(f'{DB_FOLDER}/dataset.csv', index=False)
+    filtered_instances.to_csv(f'{DB_FOLDER}/filtered_dataset.csv', index=False)
+
+
+                      
+            

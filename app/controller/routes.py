@@ -32,8 +32,6 @@ async def send_result(id: int, db: Session = Depends(get_db)):
 
         return {'resultado': str(result_value)}
     
-    except FileNotFoundError as e:
-        raise HTTPException(status_code=500, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=400, detail=f"Erro nos dados de entrada: {e}")
     except OSError as e:
@@ -55,7 +53,7 @@ async def get_metrics():
 async def get_metrics():
     try:
         DATA_PATH = 'assets/db/dataset.csv'
-        return evaluate_accuracy_by_sample_size(DATA_PATH, 105, 1050, 105)
+        return evaluate_accuracy_by_sample_size(DATA_PATH, 100, 1000, 100)
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")

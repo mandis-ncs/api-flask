@@ -74,7 +74,8 @@ def evaluate_accuracy_by_sample_size(data_path: str, start: int, end: int, step:
             nn_service = NeuralNetworkService()
             accuracies = nn_service._cross_validate_model(X_sample, y_sample)
 
-            mean_accuracy = round(np.mean(accuracies), 4)
+            # mean_accuracy = round(np.mean(accuracies), 4)
+            mean_accuracy = np.mean(accuracies)
             accuracies_list.append(mean_accuracy)
 
             print(f'Instâncias: {size}, Acurácia média: {mean_accuracy}')

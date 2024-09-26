@@ -153,35 +153,35 @@ A análise de complexidade dos principais componentes do **pré-processamento** 
 ```portugol
 algoritmo "IA_Treinamento_Modelo_Resumido"
 var
-    dados : matriz[100][100]
-    respostas : vetor[100]
-    acuracias : vetor[100]
+    // N: número de instâncias, M: número de features
+    dados : matriz[N][M]
+    respostas : vetor[N]
     // Modelo gerado pela Rede Neural Multilayer Perceptron (MLP)
     modelo : MLP
 
-// Função principal resumida
-funcao treinar_e_salvar_modelo(dados : matriz, respostas : vetor) : vetor
+// Função principal
+funcao treino_e_predicao(dados : matriz, respostas : vetor) : vetor
 inicio
     // 1. Dividir os dados em treino e teste
     dados_treino, dados_teste, respostas_treino, respostas_teste <- dividir_dados(dados, respostas)
 
-    // 2. Normalizar dados
-    dados_treino_normalizados <- normalizar_dados(dados_treino)
-    dados_teste_normalizados <- normalizar_dados(dados_teste)
+    // 2. Normalizar dados de treinamento e teste
+    normalizar_dados(dados_treino)
+    normalizar_dados(dados_teste)
 
     // 3. Criar e treinar modelo
     modelo <- criar_modelo()
-    treinar_modelo(modelo, dados_treino_normalizados, respostas_treino)
+    treinar_modelo(modelo, dados_treino, respostas_treino)
 
-    // 4. Aplicar a validação cruzada e retornar as acurácias
-    acuracias <- validacao_cruzada(modelo, dados_teste_normalizados)
+    // 4. Avaliar o modelo com dados de teste 
+    acuracia <- validacao_cruzada(modelo, dados_teste, respostas_teste)
 
-    retorne acuracias
+    retorne acuracia
 fimfuncao
 
 inicio
     // Execução principal resumida
-    predicao <- treino_e_predicao(dados, respostas)
-    escreva(": ", predicoes)
+    acuracia <- treino_e_predicao(dados, respostas)
+    escreva("Acurácia: ", acuracia)
 fimalgoritmo
 ```

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from models.ResponseItem import ResponseItem
 from models.ResponseEntity import ResponseEntity
-from metrics.evaluate_accuracy import plot_accuracy_by_epochs, evaluate_accuracy_by_sample_size
+from metrics.evaluate_accuracy import plot_accuracy_by_epochs, evaluate_accuracy_by_sample_size, accuracy_x_epochs_x_samples
 from service.NeuralNetwork import NeuralNetworkService
 from service.database import get_db, create
 from service.utils import read_csv_and_create_objects
@@ -70,6 +70,14 @@ async def get_metrics():
     try:
         DATA_PATH = 'assets/db/dataset.csv'
         return evaluate_accuracy_by_sample_size(DATA_PATH, 100, 1000, 100)
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")
+    
+@router.get('/metrics/accuracy_x_epochs_x_samples', status_code=status.HTTP_200_OK)
+async def get_metrics():
+    try:
+        return accuracy_x_epochs_x_samples()
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao processar a requisição: {e}")

@@ -17,7 +17,7 @@ DATA_PATH = f'{DB_FOLDER}/dataset.csv'
 MODEL_PATH = f'{DB_FOLDER}/autism_prediction_model.keras'
 
 class NeuralNetworkService:
-    def __init__(self, dense_units: int = 64, dropout_rate: float = 0.5, epochs: int = 30, batch_size: int = 32, verbose: int = 0, n_splits: int = 10):
+    def __init__(self, dense_units: int = 64, dropout_rate: float = 0.5, epochs: int = 90, batch_size: int = 32, verbose: int = 0, n_splits: int = 10):
         """
         Serviço de Rede Neural para classificação de dados de TEA. 
 

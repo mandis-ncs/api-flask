@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from controller.routes import router
 from service.NeuralNetwork import NeuralNetworkService
+from service.utils import filter_instances
 import pandas as pd
 
 app = FastAPI()

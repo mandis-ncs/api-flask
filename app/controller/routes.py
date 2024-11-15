@@ -7,8 +7,6 @@ from service.database import get_db, create
 from service.utils import read_csv_and_create_objects
 from sqlalchemy.orm import Session
 import numpy as np
-import pandas as pd
-import os
 
 router = APIRouter()
 neural_network_service = NeuralNetworkService()

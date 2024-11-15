@@ -1,10 +1,11 @@
 fastapi
 httpx
+imbalanced_learn
 imblearn
 joblib
 keras
 tensorflow
-locust
+locustio
 matplotlib
 numpy
 pandas

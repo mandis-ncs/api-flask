@@ -1,4 +1,5 @@
 from controller.routes import router
+from service.NeuralNetwork import NeuralNetworkService
 from httpx import AsyncClient, ASGITransport
 from fastapi import FastAPI
 import pytest
@@ -7,38 +8,8 @@ import pytest
 app = FastAPI()
 app.include_router(router)
 
-# # Configuração do banco de dados em memória com async
-# SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
-
-# engine = create_async_engine(SQLALCHEMY_DATABASE_URL, echo=True)
-# AsyncSessionLocal = sessionmaker(
-#     bind=engine,
-#     class_=AsyncSession,
-#     expire_on_commit=False
-# )
-
-# # Configuração do banco de dados para testes
-# @pytest.fixture(scope="session")
-# async def setup_db():
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.create_all)
-#     yield
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.drop_all)
-
-# @pytest.fixture(scope="function")
-# async def db_session(setup_db):
-#     async with AsyncSessionLocal() as session:
-#         async with session.begin():
-#             yield session
-#         await session.rollback()
-
-# # Dependência personalizada para usar no FastAPI
-# async def override_get_db():
-#     async with AsyncSessionLocal() as db:
-#         yield db
-
-# app.dependency_overrides[get_db] = override_get_db
+nn_service = NeuralNetworkService()
+nn_service.train_and_save_model()
 
 @pytest.mark.asyncio
 async def test_upload_data():

@@ -1,6 +1,6 @@
 # Sofia Mobile 💜
 
-<p align="justify"> Sofia é um Software Orientado por Inteligência Artificial para Auxílio ao Pré-diagnóstico de Crianças de 0 a 4 Anos com Manifestações Comportamentais do Transtorno do Espectro Autista (TEA). O aplicativo mobile CAD <em>(Computer-aided Diagnosis)</em> é destinado ao auxílio de profissionais da saúde na triagem e identificação de sinais do TEA. <strong> 💜 Nosso Objetivo 💜 </strong> é promover a acessibilidade ao diagnóstico precoce de TEA! 💜 </p>
+<p align="justify"> Sofia é um Software Orientado por Inteligência Artificial para Auxílio ao Pré-diagnóstico de Crianças de 0 a 2 Anos com Manifestações Comportamentais do Transtorno do Espectro Autista (TEA). O aplicativo mobile CAD <em>(Computer-aided Diagnosis)</em> é destinado ao auxílio de profissionais da saúde na triagem e identificação de sinais do TEA. <strong> 💜 Nosso Objetivo 💜 </strong> é promover a acessibilidade ao diagnóstico precoce de TEA! 💜 </p>
 
 <p align="center">
   <img src="https://github.com/aasjunior/com.sofia.mobile/assets/85968113/ce5ba98e-c63a-4fb7-a311-ced454084bc7" width="700" alt="ilustracao">
@@ -81,8 +81,11 @@ uvicorn main:app --reload
 
 4. Aguardar o fim do processamento do modelo MLP:
 
-5. A API estará rodando em `http://127.0.0.1:8000`.
-<br>
+<div align=center>
+<img src="https://github.com/user-attachments/assets/45cf9fa9-4eb2-4d37-883e-1295a5a31408" width="700" alt="aplicação iniciada com sucesso" />
+</div>
+
+6. A API estará rodando em `http://127.0.0.1:8000`.
 
 ### Instalação via Docker
 
@@ -193,7 +196,8 @@ A API possui os seguintes endpoints:
     <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
     <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI"/>
     <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="TensorFlow"/>
-    <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" alt="Keras"/>     
+    <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" alt="Keras"/>
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
         
   </div>
 </p>

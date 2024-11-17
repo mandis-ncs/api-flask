@@ -79,17 +79,47 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-4. A API estará rodando em `http://127.0.0.1:8000`
+4. Aguardar o fim do processamento do modelo MLP:
+
+5. A API estará rodando em `http://127.0.0.1:8000`.
 <br>
+
+### Instalação via Docker
+
+1. Caso tenha o **Docker** instalado, pode baixar a versão do projeto disponível no **Docker hub** pelo comando abaixo:
+
+```bash
+docker pull aasjunior/sofia-fastapi:1.0
+```
+
+###### Para executar a aplicação:
+
+```bash
+docker run -p 8000:8000 --name sofia-fastapi aasjunior/sofia-fastapi:1.0
+```
+
+2. O projeto clonado do **Github** também pode ser dockerizado pelo seguindo comando:
+
+```bash
+docker build -t sofia-fastapi:1.0 .
+```
+
+###### Para executar a aplicação:
+
+```bash
+docker run -p 8000:8000 --name sofia-fastapi sofia-fastapi:1.0
+```
+
+O container criado no Docker receberá o nome de `sofia-fastapi`.
 
 ## Endpoints 💜
 
 A API possui os seguintes endpoints:
 
-| Type   | Path                       |                     Obs.                              |
-|--------|----------------------------|:-----------------------------------------------------:|
-| POST   | /respostas                 |       Envia as respostas preenchidas do Q-Chat 10.    |
-| GET    | /resultado                 | Retorna o resultado do processamento da rede neural.  |
+| Type   | Path                       |                     Obs.                                                                    |
+|--------|----------------------------|:-------------------------------------------------------------------------------------------:|
+| POST   | /respostas                 |       Envia as respostas preenchidas do Q-Chat 10. Retorna o id da requisição (qchat_id).   |
+| GET    | /resultado/{qchat_id}      | Retorna o resultado do processamento da rede neural.                                        |
 
 ### Respostas
 - **URI**: `/respostas`
@@ -118,8 +148,35 @@ A API possui os seguintes endpoints:
 }
 ```
 
+- **Saída**:
+
+```json
+{
+    "status": "received",
+    "qchat_id": 1,
+    "data": {
+        "A1": 0,
+        "A2": 0,
+        "A3": 0,
+        "A4": 0,
+        "A5": 0,
+        "A6": 0,
+        "A7": 1,
+        "A8": 1,
+        "A9": 0,
+        "A10": 1,
+        "Age_Mons": 28,
+        "Sex": "f",
+        "Ethnicity": "middle eastern",
+        "Jaundice": "yes",
+        "Family_mem_with_ASD": "no",
+        "Class_ASD_Traits": ""
+    }
+}
+```
+
 ### Resultado
-- **URI**: `/resultado`
+- **URI**: `/resultado/{qchat_id}`
 - **Método**: `GET`
 - **Exemplo de Saída**:
 

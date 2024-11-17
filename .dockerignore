@@ -4,3 +4,6 @@ venv/
 *__pycache__
 *.coverage
 *.pytest_cache
+*/dist
+*/build
+*main.spec

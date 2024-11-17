@@ -13,3 +13,6 @@ app/assets/pickles/label_encoder_Sex.pkl
 app/assets/pickles/onehot_encoder.pkl
 app/assets/pickles/scaler_Age_Mons.pkl
 *.coverage
+*/dist
+*/build
+*main.spec

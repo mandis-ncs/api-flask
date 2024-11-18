@@ -10,7 +10,7 @@ Ficou interessado? Veja mais no nosso pitch de apresentação da SOFIA, [assista
 
 ## Rede Neural MLP Para Predição de TEA 💜
 
-Este projeto implementa uma Rede Neural Multicamadas (MLP) para auxiliar no pré-diagnóstico de crianças de 0 a 4 anos com manifestações comportamentais do Transtorno do Espectro Autista (TEA).
+Este projeto implementa uma Rede Neural Multicamadas (MLP) para auxiliar no pré-diagnóstico de crianças de 0 a 2 anos com manifestações comportamentais do Transtorno do Espectro Autista (TEA).
 
 ### Dependências 💜
 O projeto usa as seguintes bibliotecas:

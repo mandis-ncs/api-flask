@@ -87,7 +87,7 @@ uvicorn main:app --reload
 
 5. A API estará rodando em `http://127.0.0.1:8000`.
 
-6. A documentação da API pode ser acessada pela rota: `http://127.0.0.1:8000/docs`.
+6. Acesse a documentação da API no **Swagger UI** em: `http://127.0.0.1:8000/docs`.
 
 ### Instalação via Docker
 

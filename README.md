@@ -6,7 +6,7 @@
   <img src="https://github.com/aasjunior/com.sofia.mobile/assets/85968113/ce5ba98e-c63a-4fb7-a311-ced454084bc7" width="700" alt="ilustracao">
 </p>
 
-Ficou interessado? Veja mais no nosso pitch de apresentação da SOFIA, [assista aqui](https://www.youtube.com/watch?v=wSeBx_eXvcY) 💜
+Ficou interessado? Veja mais no nosso [pitch](https://www.youtube.com/watch?v=wSeBx_eXvcY) de apresentação da SOFIA, ou acesse o nosso [site](https://sofia-aja.vercel.app/). 💜
 
 ## Rede Neural MLP Para Predição de TEA 💜
 

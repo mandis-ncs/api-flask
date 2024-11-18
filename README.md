@@ -85,7 +85,9 @@ uvicorn main:app --reload
 <img src="https://github.com/user-attachments/assets/45cf9fa9-4eb2-4d37-883e-1295a5a31408" width="700" alt="aplicação iniciada com sucesso" />
 </div>
 
-6. A API estará rodando em `http://127.0.0.1:8000`.
+5. A API estará rodando em `http://127.0.0.1:8000`.
+
+6. A documentação da API pode ser acessada pela rota: `http://127.0.0.1:8000/docs`.
 
 ### Instalação via Docker
 

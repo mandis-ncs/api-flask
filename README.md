@@ -6,6 +6,9 @@
   <img src="https://github.com/aasjunior/com.sofia.mobile/assets/85968113/ce5ba98e-c63a-4fb7-a311-ced454084bc7" width="700" alt="ilustracao">
 </p>
 
+###### FETEPS 2024
+Este projeto participou da **15ª Feira Tecnológica do Centro Paula Souza** - <a href='https://feteps.cpscetec.com.br/docs/2024_feteps_publicacao.pdf' target='_blank'>FETEPS</a>.
+
 Ficou interessado? Veja mais no nosso [pitch](https://www.youtube.com/watch?v=wSeBx_eXvcY) de apresentação da SOFIA, ou acesse o nosso [site](https://sofia-aja.vercel.app/). 💜
 
 ## Rede Neural MLP Para Predição de TEA 💜

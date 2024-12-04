@@ -41,7 +41,7 @@ O projeto consiste em várias partes:
 
 5. **Treinamento do modelo final**: O script principal carrega e pré-processa os dados, realiza a validação cruzada, treina o modelo final em todos os dados e salva o modelo treinado.
 
-6. **FastAPI**: O projeto inclui uma API que recebe respostas via POST, salva as respostas no banco de dados SQLite e retorna previsões via GET. O resultado da predição é retornado com valor `'1'` para casos positivos de TEA ou valor `'0'` para casos negativos, indicando ausência de sinais de TEA.
+6. **FastAPI**: O projeto inclui uma API que recebe respostas via POST, salva as respostas no banco de dados `SQLite` e retorna previsões via GET. O resultado da predição é retornado com valor `'1'` para casos positivos de TEA ou valor `'0'` para casos negativos, indicando ausência de sinais de TEA.
 
 ### Base de treinamento 💜
 
